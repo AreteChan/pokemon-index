@@ -49,7 +49,7 @@ export default {
       //限制amount取值范围
       if (val < 1)   this.amount = 0
       if (val > 100) this.amount = 100
-
+      
       if (val + this.firstId -1 > 898) {alert('超出宝可梦总数898！'); this.amount = 0}
       else {
         //比较新值与旧值，执行push或pop  
@@ -67,15 +67,18 @@ export default {
       }
       localStorage.setItem('amount', val)
     },
+    
     firstId(val, old) {
       //设定firstId最小值
       if (val < 1)  {this.firstId = 1}
-
-      if (val + this.amount -1 > 898) {alert('超出宝可梦总数898！'); this.firstId = old}
       else {
-        this.$bus.$emit('clearPokemons') //清空pokemons数据
-        for (let i = val; i < val + this.amount; i++) {
-        this.getPokemon(i)
+        if (val + this.amount -1 > 898) {alert('超出宝可梦总数898！'); this.firstId = old}
+        else {
+          this.$bus.$emit('clearPokemons') //清空pokemons数据
+          for (let i = val; i < val + this.amount; i++) {
+          this.getPokemon(i)
+          console.log('1')
+          }
         }
       }
       localStorage.setItem('firstId', val)
